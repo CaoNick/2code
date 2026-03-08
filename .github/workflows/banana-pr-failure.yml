@@ -1,0 +1,13 @@
+name: Banana PR Failure
+
+on:
+  pull_request:
+
+jobs:
+  fail-with-banana:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Emit failure message
+        run: |
+          echo "Failed to test! Banana 34" >&2
+          exit 1
