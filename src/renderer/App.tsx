@@ -210,7 +210,7 @@ export function App() {
               <TRPCProvider>
                 <div
                   data-agents-page
-                  className="h-screen w-screen bg-background text-foreground overflow-hidden"
+                  className="app-shell h-screen w-screen bg-background text-foreground overflow-hidden"
                 >
                   <AppContent />
                 </div>

@@ -257,59 +257,53 @@ export function AnthropicOnboardingPage() {
   const isSubmitting = flowState.step === "submitting"
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center bg-background select-none">
+    <div className="onboarding-stage bg-background select-none">
       {/* Draggable title bar area */}
       <div
-        className="fixed top-0 left-0 right-0 h-10"
+        className="fixed left-0 right-0 top-0 h-10"
         style={{ WebkitAppRegion: "drag" } as React.CSSProperties}
       />
 
       {/* Back button - fixed in top left corner below traffic lights */}
-      <button
-        onClick={handleBack}
-        className="fixed top-12 left-4 flex items-center justify-center h-8 w-8 rounded-full hover:bg-foreground/5 transition-colors"
-      >
+      <button onClick={handleBack} className="onboarding-back">
         <ChevronLeft className="h-5 w-5" />
       </button>
 
-      <div className="w-full max-w-[440px] space-y-8 px-4">
+      <div className="onboarding-panel w-full max-w-[520px] space-y-6">
         {/* Header with dual icons */}
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-2 p-2 mx-auto w-max rounded-full border border-border">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+        <div className="space-y-2 text-center">
+          <p className="onboarding-kicker">Subscription Login</p>
+          <h1 className="onboarding-title">Connect Claude Code</h1>
+          <p className="onboarding-subtitle">
+            Link your subscription and paste the auth code to finish setup.
+          </p>
+          <div className="mx-auto mt-3 flex w-max items-center gap-2 rounded-full border border-border bg-card/65 p-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
               <Logo className="w-5 h-5" fill="white" />
             </div>
-            <div className="w-10 h-10 rounded-full bg-[#D97757] flex items-center justify-center">
-              <ClaudeCodeIcon className="w-6 h-6 text-white" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background">
+              <ClaudeCodeIcon className="w-6 h-6 text-primary" />
             </div>
-          </div>
-          <div className="space-y-1">
-            <h1 className="text-base font-semibold tracking-tight">
-              Connect Claude Code
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Connect your Claude Code subscription to get started
-            </p>
           </div>
         </div>
 
         {/* Content */}
-        <div className="space-y-6 flex flex-col items-center">
+        <div className="flex flex-col items-center space-y-5">
           {/* Existing token prompt */}
           {shouldOfferExistingToken && flowState.step === "idle" && (
             <div className="space-y-4 w-full">
-              <div className="p-4 bg-muted/50 border border-border rounded-lg">
+              <div className="rounded-xl border border-border bg-card/60 p-4">
                 <p className="text-sm font-medium">
                   Existing Claude Code credentials found
                 </p>
                 {existingToken && (
-                  <pre className="mt-2 px-2.5 py-2 text-xs text-foreground whitespace-pre-wrap break-words font-mono bg-background/60 rounded border border-border/60">
+                  <pre className="mt-2 whitespace-pre-wrap break-words rounded border border-border/60 bg-background/60 px-2.5 py-2 font-mono text-xs text-foreground">
                     {formatTokenPreview(existingToken)}
                   </pre>
                 )}
               </div>
               {existingTokenError && (
-                <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                <div className="rounded-xl border border-destructive/20 bg-destructive/10 p-3">
                   <p className="text-sm text-destructive">
                     {existingTokenError}
                   </p>
@@ -319,14 +313,14 @@ export function AnthropicOnboardingPage() {
                 <button
                   onClick={handleRejectExistingToken}
                   disabled={isUsingExistingToken}
-                  className="h-8 px-3 flex-1 bg-muted text-foreground rounded-lg text-sm font-medium transition-[background-color,transform] duration-150 hover:bg-muted/80 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="onboarding-muted-action flex flex-1 items-center justify-center border border-border bg-card/70 text-foreground transition hover:bg-card disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Auth with Anthropic
                 </button>
                 <button
                   onClick={handleUseExistingToken}
                   disabled={isUsingExistingToken}
-                  className="h-8 px-3 flex-1 bg-primary text-primary-foreground rounded-lg text-sm font-medium transition-[background-color,transform] duration-150 hover:bg-primary/90 active:scale-[0.97] shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)] dark:shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="onboarding-action flex flex-1 items-center justify-center bg-primary text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isUsingExistingToken ? (
                     <IconSpinner className="h-4 w-4" />
@@ -347,7 +341,7 @@ export function AnthropicOnboardingPage() {
               <button
                 onClick={handleConnectClick}
                 disabled={userClickedConnect && isLoadingAuth}
-                className="h-8 px-4 min-w-[85px] bg-primary text-primary-foreground rounded-lg text-sm font-medium transition-[background-color,transform] duration-150 hover:bg-primary/90 active:scale-[0.97] shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)] dark:shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="onboarding-action min-w-[100px] bg-primary px-4 text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {userClickedConnect && isLoadingAuth ? (
                   <IconSpinner className="h-4 w-4" />
@@ -362,14 +356,14 @@ export function AnthropicOnboardingPage() {
           {(urlOpened ||
             flowState.step === "has_url" ||
             flowState.step === "submitting") && (
-            <div className="space-y-4">
+            <div className="w-full space-y-4">
               <div className="relative">
                 <Input
                   value={authCode}
                   onChange={handleCodeChange}
                   onKeyDown={handleKeyDown}
                   placeholder="Paste your authentication code here..."
-                  className="font-mono text-center pr-10"
+                  className="h-10 rounded-xl border-border/80 bg-background/70 pr-10 text-center font-mono"
                   autoFocus
                   disabled={isSubmitting}
                 />
@@ -379,14 +373,14 @@ export function AnthropicOnboardingPage() {
                   </div>
                 )}
               </div>
-              <p className="text-xs text-muted-foreground text-center">
+              <p className="text-center text-xs text-muted-foreground">
                 A new tab has opened for authentication.
                 {savedOauthUrl && (
                   <>
                     {" "}
                     <button
                       onClick={handleOpenFallbackUrl}
-                      className="text-primary hover:underline"
+                      className="font-semibold text-primary hover:underline"
                     >
                       Didn't open? Click here
                     </button>
@@ -398,13 +392,13 @@ export function AnthropicOnboardingPage() {
 
           {/* Error State */}
           {flowState.step === "error" && (
-            <div className="space-y-4">
-              <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+            <div className="w-full space-y-4">
+              <div className="rounded-xl border border-destructive/20 bg-destructive/10 p-4">
                 <p className="text-sm text-destructive">{flowState.message}</p>
               </div>
               <button
                 onClick={handleConnectClick}
-                className="w-full h-8 px-3 bg-muted text-foreground rounded-lg text-sm font-medium transition-[background-color,transform] duration-150 hover:bg-muted/80 active:scale-[0.97] flex items-center justify-center"
+                className="onboarding-muted-action w-full border border-border bg-card/70 text-foreground transition hover:bg-card"
               >
                 Try Again
               </button>
