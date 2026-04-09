@@ -15,20 +15,17 @@ export function SelectRepoPage() {
   const [showClonePage, setShowClonePage] = useState(false)
   const [githubUrl, setGithubUrl] = useState("")
 
-  // Get tRPC utils for cache management
   const utils = trpc.useUtils()
 
-  // Open folder mutation
   const openFolder = trpc.projects.openFolder.useMutation({
     onSuccess: (project) => {
       if (project) {
-        // Optimistically update the projects list cache
         utils.projects.list.setData(undefined, (oldData) => {
           if (!oldData) return [project]
           const exists = oldData.some((p) => p.id === project.id)
           if (exists) {
             return oldData.map((p) =>
-              p.id === project.id ? { ...p, updatedAt: project.updatedAt } : p
+              p.id === project.id ? { ...p, updatedAt: project.updatedAt } : p,
             )
           }
           return [project, ...oldData]
@@ -51,7 +48,6 @@ export function SelectRepoPage() {
     },
   })
 
-  // Clone from GitHub mutation
   const cloneFromGitHub = trpc.projects.cloneFromGitHub.useMutation({
     onSuccess: (project) => {
       if (project) {
@@ -60,7 +56,7 @@ export function SelectRepoPage() {
           const exists = oldData.some((p) => p.id === project.id)
           if (exists) {
             return oldData.map((p) =>
-              p.id === project.id ? { ...p, updatedAt: project.updatedAt } : p
+              p.id === project.id ? { ...p, updatedAt: project.updatedAt } : p,
             )
           }
           return [project, ...oldData]
@@ -100,59 +96,52 @@ export function SelectRepoPage() {
     setGithubUrl("")
   }
 
-  // Clone from GitHub page
   if (showClonePage) {
     return (
-      <div className="h-screen w-screen flex flex-col items-center justify-center bg-background select-none">
-        {/* Draggable title bar area */}
+      <div className="onboarding-stage bg-background select-none">
         <div
-          className="fixed top-0 left-0 right-0 h-10"
+          className="fixed left-0 right-0 top-0 h-10"
           style={{ WebkitAppRegion: "drag" } as React.CSSProperties}
         />
 
-        {/* Back button */}
         <button
           onClick={handleBack}
           disabled={cloneFromGitHub.isPending}
-          className="fixed top-12 left-4 flex items-center justify-center h-8 w-8 rounded-full hover:bg-foreground/5 transition-colors disabled:opacity-50"
+          className="onboarding-back"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
 
-        <div className="w-full max-w-[440px] space-y-8 px-4">
-          {/* Header with dual icons */}
-          <div className="text-center space-y-4">
-            <div className="flex items-center justify-center gap-2 p-2 mx-auto w-max rounded-full border border-border">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <Logo className="w-5 h-5" fill="white" />
-              </div>
-              <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center">
-                <GitHubIcon className="w-5 h-5 text-background" />
-              </div>
+        <div className="onboarding-panel w-full max-w-[520px] space-y-6">
+          <div className="space-y-2 text-center">
+            <p className="onboarding-kicker">Repository Intake</p>
+            <h1 className="onboarding-title">Clone from GitHub</h1>
+            <p className="onboarding-subtitle">
+              Paste a full URL or shorthand like <span className="font-semibold text-foreground">owner/repo</span>.
+            </p>
+          </div>
+
+          <div className="mx-auto flex w-max items-center gap-2 rounded-full border border-border bg-card/70 p-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
+              <Logo className="h-5 w-5" fill="currentColor" />
             </div>
-            <div className="space-y-1">
-              <h1 className="text-base font-semibold tracking-tight">
-                Clone from GitHub
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                Enter a repository URL or owner/repo
-              </p>
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background">
+              <GitHubIcon className="h-5 w-5" />
             </div>
           </div>
 
-          {/* Input */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="relative">
               <Input
                 value={githubUrl}
                 onChange={(e) => setGithubUrl(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && githubUrl.trim()) {
-                    handleCloneFromGitHub()
+                    void handleCloneFromGitHub()
                   }
                 }}
                 placeholder="owner/repo"
-                className="text-center pr-10"
+                className="h-10 rounded-xl border-border/80 bg-background/70 text-center"
                 autoFocus
                 disabled={cloneFromGitHub.isPending}
               />
@@ -162,65 +151,57 @@ export function SelectRepoPage() {
                 </div>
               )}
             </div>
-            <p className="text-xs text-muted-foreground text-center">
-              Example: facebook/react or https://github.com/facebook/react
+            <p className="text-center text-xs text-muted-foreground">
+              Example: <span className="font-medium text-foreground">facebook/react</span>
             </p>
           </div>
+
+          <button
+            onClick={() => void handleCloneFromGitHub()}
+            disabled={!githubUrl.trim() || cloneFromGitHub.isPending}
+            className="onboarding-action w-full bg-primary text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {cloneFromGitHub.isPending ? <IconSpinner className="h-4 w-4" /> : "Clone repository"}
+          </button>
         </div>
       </div>
     )
   }
 
-  // Main select repo page
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center bg-background select-none">
-      {/* Draggable title bar area */}
+    <div className="onboarding-stage bg-background select-none">
       <div
-        className="fixed top-0 left-0 right-0 h-10"
+        className="fixed left-0 right-0 top-0 h-10"
         style={{ WebkitAppRegion: "drag" } as React.CSSProperties}
       />
 
-      <div className="w-full max-w-[440px] space-y-8 px-4">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center mx-auto w-max">
-            <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
-              <Logo className="w-6 h-6" fill="white" />
-            </div>
-          </div>
-          <div className="space-y-1">
-            <h1 className="text-base font-semibold tracking-tight">
-              Select a repository
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Choose a local folder to start working with
-            </p>
-          </div>
+      <div className="onboarding-panel w-full max-w-[520px] space-y-6">
+        <div className="space-y-2 text-center">
+          <p className="onboarding-kicker">Workspace Setup</p>
+          <h1 className="onboarding-title">Bring in your repository</h1>
+          <p className="onboarding-subtitle">
+            Open a local project or clone a fresh one to launch your first agent run.
+          </p>
         </div>
 
-        {/* Content */}
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card/70 text-primary">
+          <Logo className="h-7 w-7" fill="currentColor" />
+        </div>
+
         <div className="space-y-3">
           <button
-            onClick={handleOpenFolder}
+            onClick={() => void handleOpenFolder()}
             disabled={openFolder.isPending}
-            className="w-full h-8 px-4 bg-primary text-primary-foreground rounded-lg text-sm font-medium transition-[background-color,transform] duration-150 hover:bg-primary/90 active:scale-[0.97] shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)] dark:shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            className="onboarding-action flex w-full items-center justify-center bg-primary text-primary-foreground transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {openFolder.isPending ? (
-              <IconSpinner className="h-4 w-4" />
-            ) : (
-              "Select folder"
-            )}
+            {openFolder.isPending ? <IconSpinner className="h-4 w-4" /> : "Open local folder"}
           </button>
           <button
             onClick={() => setShowClonePage(true)}
             disabled={cloneFromGitHub.isPending}
-            className="w-full h-8 px-4 bg-muted text-foreground rounded-lg text-sm font-medium transition-[background-color,transform] duration-150 hover:bg-muted/80 active:scale-[0.97] shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.06)] dark:shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.06)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            className="onboarding-muted-action w-full border border-border bg-card/70 text-foreground transition hover:bg-card disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {cloneFromGitHub.isPending ? (
-              <IconSpinner className="h-4 w-4" />
-            ) : (
-              "Clone from GitHub"
-            )}
+            Clone from GitHub
           </button>
         </div>
       </div>

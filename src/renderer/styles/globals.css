@@ -8,70 +8,66 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 228 100% 50%;
-    /* #0034FF - same for all themes */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --input-background: 240 4.8% 95.9%;
-    --ring: 228 100% 50%;
-    /* Same as primary - blue focus ring */
-    --selection: 228 100% 50% / 0.25;
-    /* Text selection background - primary at 25% */
-    --radius: 0.5rem;
-    /* Plan Mode Colors */
-    --plan-mode: 33 83% 67%;
-    --plan-mode-foreground: 0 0% 8%;
-    /* Timeline/Content background */
-    --tl-background: 0 0% 98%;
+    --background: 32 54% 96%;
+    --foreground: 218 36% 13%;
+    --card: 34 58% 99%;
+    --card-foreground: 220 34% 13%;
+    --popover: 36 64% 99%;
+    --popover-foreground: 220 34% 13%;
+    --primary: 16 88% 45%;
+    --primary-foreground: 36 80% 97%;
+    --secondary: 36 48% 91%;
+    --secondary-foreground: 216 32% 20%;
+    --muted: 34 36% 88%;
+    --muted-foreground: 216 14% 40%;
+    --accent: 206 62% 90%;
+    --accent-foreground: 218 34% 14%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 35 100% 98%;
+    --border: 28 29% 76%;
+    --input: 30 34% 82%;
+    --input-background: 38 62% 98%;
+    --ring: 18 83% 47%;
+    --selection: 16 88% 45% / 0.2;
+    --radius: 0.9rem;
+    --plan-mode: 34 83% 67%;
+    --plan-mode-foreground: 15 36% 10%;
+    --tl-background: 34 58% 94%;
+
+    --onboarding-surface: 40 60% 98%;
+    --onboarding-surface-strong: 37 68% 95%;
+    --onboarding-shadow: 16 58% 26% / 0.18;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 240 4.8% 95.9%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 9%;
-    /* #171717 */
-    --popover-foreground: 0 0% 98%;
-    --primary: 228 100% 50%;
-    /* #0034FF - same for all themes */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 5.9% 10%;
-    --muted-foreground: 240 4.4% 58%;
-    --accent: 240 5.9% 10%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    /* #30302E - matches Claude input color */
-    --input-background: 60 2% 18%;
-    --ring: 228 100% 50%;
-    /* Same as primary - blue focus ring */
-    --selection: 228 100% 50% / 0.3;
-    /* Text selection background - primary at 30% */
-    /* Plan Mode Colors */
-    --plan-mode: 33 83% 67%;
-    --plan-mode-foreground: 0 0% 8%;
-    /* Timeline/Content background - matches Claude input color #30302E */
-    --tl-background: 60 2% 18%;
+    --background: 223 45% 8%;
+    --foreground: 31 74% 92%;
+    --card: 221 43% 10%;
+    --card-foreground: 31 74% 92%;
+    --popover: 221 47% 9%;
+    --popover-foreground: 31 74% 92%;
+    --primary: 22 94% 59%;
+    --primary-foreground: 222 43% 8%;
+    --secondary: 220 31% 18%;
+    --secondary-foreground: 30 48% 92%;
+    --muted: 220 28% 15%;
+    --muted-foreground: 32 20% 67%;
+    --accent: 199 45% 21%;
+    --accent-foreground: 36 68% 94%;
+    --destructive: 0 72% 56%;
+    --destructive-foreground: 18 50% 96%;
+    --border: 218 26% 23%;
+    --input: 218 26% 23%;
+    --input-background: 220 32% 14%;
+    --ring: 23 98% 63%;
+    --selection: 23 98% 63% / 0.26;
+    --plan-mode: 32 83% 67%;
+    --plan-mode-foreground: 15 36% 10%;
+    --tl-background: 219 34% 13%;
+
+    --onboarding-surface: 220 36% 11%;
+    --onboarding-surface-strong: 220 30% 16%;
+    --onboarding-shadow: 0 0% 0% / 0.42;
   }
 }
 
@@ -79,12 +75,185 @@
   * {
     @apply border-border;
   }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    font-family: "Avenir Next", "Segoe UI", "SF Pro Text", sans-serif;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
+    background-image:
+      radial-gradient(circle at 8% 10%, hsl(var(--primary) / 0.16), transparent 34%),
+      radial-gradient(circle at 84% 14%, hsl(var(--accent) / 0.28), transparent 42%),
+      radial-gradient(circle at 50% 108%, hsl(var(--foreground) / 0.07), transparent 48%),
+      linear-gradient(158deg, hsl(var(--background)) 0%, hsl(var(--background)) 55%, hsl(var(--secondary) / 0.44) 100%);
   }
+
+  a {
+    color: inherit;
+  }
+}
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, hsl(var(--foreground) / 0.05), transparent 38%),
+    radial-gradient(circle at 74% 86%, hsl(var(--primary) / 0.1), transparent 44%);
+  opacity: 0.82;
+}
+
+.app-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to bottom, transparent 0%, hsl(var(--background) / 0.16) 80%, hsl(var(--background) / 0.4) 100%);
+}
+
+/* Onboarding shell */
+.onboarding-stage {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.onboarding-stage::before,
+.onboarding-stage::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.onboarding-stage::before {
+  width: 34rem;
+  height: 34rem;
+  left: -9rem;
+  bottom: -18rem;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.26) 0%, transparent 70%);
+}
+
+.onboarding-stage::after {
+  width: 28rem;
+  height: 28rem;
+  right: -9rem;
+  top: -12rem;
+  background: radial-gradient(circle, hsl(var(--accent) / 0.4) 0%, transparent 72%);
+}
+
+.onboarding-panel {
+  width: 100%;
+  max-width: 33rem;
+  padding: 1.7rem;
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(165deg, hsl(var(--onboarding-surface)) 0%, hsl(var(--onboarding-surface-strong)) 100%);
+  border: 1px solid hsl(var(--border) / 0.78);
+  box-shadow:
+    0 20px 48px hsl(var(--onboarding-shadow)),
+    inset 0 1px 0 hsl(0 0% 100% / 0.28);
+  backdrop-filter: blur(4px);
+}
+
+.onboarding-kicker {
+  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+
+.onboarding-title {
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin-top: 0.4rem;
+}
+
+.onboarding-subtitle {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: hsl(var(--muted-foreground));
+}
+
+.onboarding-back {
+  position: fixed;
+  top: 3rem;
+  left: 1rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card) / 0.85);
+  color: hsl(var(--foreground));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 140ms ease, background-color 140ms ease;
+}
+
+.onboarding-back:hover {
+  background: hsl(var(--accent));
+}
+
+.onboarding-back:active {
+  transform: scale(0.94);
+}
+
+.onboarding-action {
+  border-radius: 0.8rem;
+  height: 2.2rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.onboarding-muted-action {
+  border-radius: 0.8rem;
+  height: 2.2rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.onboarding-option {
+  border-radius: 1rem;
+  border: 1px solid hsl(var(--border) / 0.7);
+  background: hsl(var(--card) / 0.58);
+  transition: transform 140ms ease, box-shadow 180ms ease, border-color 140ms ease;
+}
+
+.onboarding-option:hover {
+  transform: translateY(-1px);
+  border-color: hsl(var(--primary) / 0.52);
+  box-shadow: 0 10px 20px hsl(var(--onboarding-shadow));
+}
+
+.onboarding-option[data-selected="true"] {
+  border-color: hsl(var(--primary) / 0.66);
+  background: linear-gradient(170deg, hsl(var(--primary) / 0.16), hsl(var(--card) / 0.7));
+  box-shadow: 0 12px 26px hsl(var(--onboarding-shadow));
 }
 
 /* Search highlight styles */
@@ -126,12 +295,12 @@
 
 /* Hide scrollbar but keep scroll functionality */
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 /* Drag region for window */
@@ -165,13 +334,13 @@
 .chroma-text {
   background-image: linear-gradient(
     90deg,
-    #0a0a0a 0%,
-    #0a0a0a 30%,
-    #6366f1 42%,
-    #8b5cf6 50%,
-    #a855f7 58%,
-    #0a0a0a 70%,
-    #0a0a0a 100%
+    #0f172a 0%,
+    #0f172a 30%,
+    #ea580c 42%,
+    #fb923c 50%,
+    #f59e0b 58%,
+    #0f172a 70%,
+    #0f172a 100%
   );
   background-size: 300% 100%;
   background-position: 100% 0;
@@ -185,28 +354,25 @@
   animation: chroma-slide 2s ease-out infinite;
 }
 
-/* Dark theme chroma colors */
 .dark .chroma-text {
   background-image: linear-gradient(
     90deg,
-    #fafafa 0%,
-    #fafafa 30%,
-    #818cf8 42%,
-    #a78bfa 50%,
-    #c084fc 58%,
-    #fafafa 70%,
-    #fafafa 100%
+    #e2e8f0 0%,
+    #e2e8f0 30%,
+    #fb923c 42%,
+    #fdba74 50%,
+    #facc15 58%,
+    #e2e8f0 70%,
+    #e2e8f0 100%
   );
 }
 
 /* Sonner Toast Styling - Google-style layout */
-/* Use !important to override Sonner's internal [data-theme] selectors (higher specificity) */
 [data-sonner-toaster] {
   --normal-bg: hsl(var(--popover)) !important;
   --normal-text: hsl(var(--popover-foreground)) !important;
   --normal-border: hsl(var(--border)) !important;
   --border-radius: var(--radius) !important;
-  /* Override rich colors - all toasts should be neutral */
   --success-bg: hsl(var(--popover)) !important;
   --success-border: hsl(var(--border)) !important;
   --success-text: hsl(var(--popover-foreground)) !important;
@@ -230,7 +396,6 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Icon on the left */
 [data-sonner-toast] [data-icon] {
   margin-top: 1px;
   color: hsl(var(--muted-foreground));
@@ -243,7 +408,6 @@
   height: 16px;
 }
 
-/* Loading spinner - match icon size */
 [data-sonner-toast] .sonner-loading-wrapper {
   --size: 16px;
 }
@@ -252,27 +416,23 @@
   background: hsl(var(--muted-foreground));
 }
 
-/* Content wrapper - take remaining space */
 [data-sonner-toast] [data-content] {
   flex: 1;
   min-width: 0;
 }
 
-/* Title styling */
 [data-sonner-toast] [data-title] {
   font-weight: 500;
   font-size: 14px;
   line-height: 1.4;
 }
 
-/* Description styling */
 [data-sonner-toast] [data-description] {
   color: hsl(var(--muted-foreground));
   font-size: 13px;
   line-height: 1.4;
 }
 
-/* Action button - on its own row at the bottom right */
 [data-sonner-toast][data-styled="true"] [data-button] {
   position: absolute;
   bottom: 12px;
@@ -297,12 +457,10 @@
   transform: scale(0.97);
 }
 
-/* Add bottom padding when button exists */
 [data-sonner-toast][data-styled="true"]:has([data-button]) {
   padding-bottom: 44px;
 }
 
-/* Close button - inside toast, top right corner */
 [data-sonner-toast] [data-close-button] {
   position: absolute !important;
   top: 8px !important;

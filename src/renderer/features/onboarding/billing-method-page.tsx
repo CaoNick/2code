@@ -35,42 +35,42 @@ const billingOptions: BillingOption[] = [
     method: "claude-subscription",
     group: "claude-code",
     title: "Claude Pro/Max",
-    subtitle: "Use your Claude subscription for unlimited access.",
+    subtitle: "Unlimited sessions through your Claude subscription.",
     recommended: true,
-    icon: <ClaudeCodeIcon className="w-5 h-5" />,
+    icon: <ClaudeCodeIcon className="h-5 w-5" />,
   },
   {
     id: "api-key",
     method: "api-key",
     group: "claude-code",
     title: "Anthropic API Key",
-    subtitle: "Pay-as-you-go with your own API key.",
-    icon: <KeyFilledIcon className="w-5 h-5" />,
+    subtitle: "Use pay-as-you-go credits from Anthropic Console.",
+    icon: <KeyFilledIcon className="h-5 w-5" />,
   },
   {
     id: "custom-model",
     method: "custom-model",
     group: "claude-code",
     title: "Custom Model",
-    subtitle: "Use a custom base URL and model.",
-    icon: <SettingsFilledIcon className="w-5 h-5" />,
+    subtitle: "Bring your own endpoint, token, and model id.",
+    icon: <SettingsFilledIcon className="h-5 w-5" />,
   },
   {
     id: "codex-subscription",
     method: "codex-subscription",
     group: "codex",
     title: "Codex Subscription",
-    subtitle: "Use your Codex ChatGPT login.",
+    subtitle: "Authenticate with your ChatGPT account.",
     recommended: true,
-    icon: <CodexIcon className="w-5 h-5" />,
+    icon: <CodexIcon className="h-5 w-5" />,
   },
   {
     id: "codex-api-key",
     method: "codex-api-key",
     group: "codex",
-    title: "API Key",
-    subtitle: "Use an app-managed OpenAI API key for Codex.",
-    icon: <KeyFilledIcon className="w-5 h-5" />,
+    title: "OpenAI API Key",
+    subtitle: "Connect with an API key managed by the app.",
+    icon: <KeyFilledIcon className="h-5 w-5" />,
   },
 ]
 
@@ -97,7 +97,6 @@ export function BillingMethodPage() {
       selectedOption.method === "codex-subscription" ||
       selectedOption.method === "codex-api-key"
     ) {
-      // Force Codex onboarding step when user explicitly chooses a Codex auth mode.
       setCodexOnboardingCompleted(false)
     }
 
@@ -105,25 +104,22 @@ export function BillingMethodPage() {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center bg-background select-none">
-      {/* Draggable title bar area */}
+    <div className="onboarding-stage bg-background select-none">
       <div
-        className="fixed top-0 left-0 right-0 h-10"
+        className="fixed left-0 right-0 top-0 h-10"
         style={{ WebkitAppRegion: "drag" } as React.CSSProperties}
       />
 
-      <div className="w-full max-w-[440px] min-h-[520px] space-y-8 px-4">
-        {/* Header */}
-        <div className="text-center space-y-1">
-          <h1 className="text-base font-semibold tracking-tight">
-            Connect AI Provider
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Choose how you'd like to connect your provider.
+      <div className="onboarding-panel w-full max-w-[520px] space-y-6 px-1 py-1">
+        <div className="space-y-2 text-center">
+          <p className="onboarding-kicker">Agent Control Plane</p>
+          <h1 className="onboarding-title">Choose your model gateway</h1>
+          <p className="onboarding-subtitle">
+            Pick an auth mode now. You can switch providers later from settings.
           </p>
         </div>
 
-        <div className="flex items-center rounded-full bg-muted p-1">
+        <div className="grid grid-cols-2 gap-2 rounded-xl border border-border/80 bg-card/65 p-1.5">
           <button
             type="button"
             onClick={() => {
@@ -131,9 +127,9 @@ export function BillingMethodPage() {
               setSelectedOptionId("claude-subscription")
             }}
             className={cn(
-              "h-8 flex-1 rounded-full text-sm font-medium transition-colors",
+              "onboarding-muted-action px-3 transition",
               selectedGroup === "claude-code"
-                ? "bg-background text-foreground shadow-sm"
+                ? "bg-foreground text-background shadow"
                 : "text-muted-foreground hover:text-foreground",
             )}
           >
@@ -146,9 +142,9 @@ export function BillingMethodPage() {
               setSelectedOptionId("codex-subscription")
             }}
             className={cn(
-              "h-8 flex-1 rounded-full text-sm font-medium transition-colors",
+              "onboarding-muted-action px-3 transition",
               selectedGroup === "codex"
-                ? "bg-background text-foreground shadow-sm"
+                ? "bg-foreground text-background shadow"
                 : "text-muted-foreground hover:text-foreground",
             )}
           >
@@ -156,65 +152,53 @@ export function BillingMethodPage() {
           </button>
         </div>
 
-        {/* Billing Options */}
-        <div className="space-y-3">
-          {visibleOptions.map((option) => (
-            <button
-              key={option.id}
-              onClick={() => setSelectedOptionId(option.id)}
-              className={cn(
-                "relative w-full p-4 rounded-xl text-left transition-[transform,box-shadow] duration-150 ease-out",
-                "shadow-[0_0_0_0.5px_rgba(0,0,0,0.15),0_1px_2px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_0.5px_rgba(255,255,255,0.1),0_1px_2px_rgba(0,0,0,0.3)]",
-                "hover:shadow-[0_0_0_0.5px_rgba(0,0,0,0.2),0_2px_4px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_0_0_0.5px_rgba(255,255,255,0.15),0_2px_4px_rgba(0,0,0,0.4)]",
-                "active:scale-[0.99]",
-                selectedOptionId === option.id
-                  ? "bg-primary/5"
-                  : "bg-background"
-              )}
-            >
-              {/* Checkmark in top right corner */}
-              {selectedOptionId === option.id && (
-                <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)]">
-                  <Check className="w-3 h-3 text-primary-foreground" />
-                </div>
-              )}
-              <div className="flex items-start gap-3">
-                <div
-                  className={cn(
-                    "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
-                    option.id === "claude-subscription"
-                      ? "bg-[#D97757] text-white"
-                      : option.id === "codex-subscription"
-                        ? "bg-white text-black"
-                      : selectedOptionId === option.id
-                        ? "bg-foreground text-background"
-                        : "bg-muted text-muted-foreground"
-                  )}
-                >
-                  {option.icon}
-                </div>
-                <div className="flex-1 min-w-0 pt-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium">{option.title}</span>
-                    {option.recommended && (
-                      <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
-                        Recommended
-                      </span>
-                    )}
+        <div className="space-y-2">
+          {visibleOptions.map((option) => {
+            const isSelected = selectedOptionId === option.id
+
+            return (
+              <button
+                key={option.id}
+                onClick={() => setSelectedOptionId(option.id)}
+                data-selected={isSelected}
+                className="onboarding-option relative w-full p-4 text-left"
+              >
+                {isSelected && (
+                  <div className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <Check className="h-3 w-3" />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {option.subtitle}
-                  </p>
+                )}
+
+                <div className="flex items-start gap-3">
+                  <div
+                    className={cn(
+                      "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border/50",
+                      isSelected ? "bg-foreground text-background" : "bg-muted text-muted-foreground",
+                    )}
+                  >
+                    {option.icon}
+                  </div>
+
+                  <div className="min-w-0 flex-1 pt-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold tracking-tight">{option.title}</span>
+                      {option.recommended && (
+                        <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+                          Recommended
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">{option.subtitle}</p>
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            )
+          })}
         </div>
 
-        {/* Continue Button */}
         <button
           onClick={handleContinue}
-          className="w-full h-8 px-3 bg-primary text-primary-foreground rounded-lg text-sm font-medium transition-[background-color,transform] duration-150 hover:bg-primary/90 active:scale-[0.97] shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)] dark:shadow-[0_0_0_0.5px_rgb(23,23,23),inset_0_0_0_1px_rgba(255,255,255,0.14)] flex items-center justify-center"
+          className="onboarding-action w-full bg-primary text-primary-foreground transition hover:bg-primary/90"
         >
           Continue
         </button>
